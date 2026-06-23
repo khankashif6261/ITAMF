@@ -8,7 +8,7 @@ export function UserProvider({ children }) {
 useEffect(()=> {
   async function getUserDetails() {
     const userId = localStorage.userId
-    const res = await fetch(`http://localhost:5000/api/userDetails/${userId}`);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/userDetails/${userId}`);
     const data = await res.json();
     setuser(data);
   }

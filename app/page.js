@@ -48,7 +48,8 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const { user, setuser } = useUser();
-  const currentUser = user?.[0];
+  const currentUser = Array.isArray(user) ? user[0] : user;
+  const isAdmin = currentUser?.role?.trim().toLowerCase() === "admin";
 
   const handleLogout = () => {
     localStorage.removeItem("userId");
@@ -213,7 +214,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Quick Actions — admin only */}
-        {user?.[0]?.role === "admin" && (
+        {isAdmin && (
           <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-100">
             <h3 className="font-semibold text-gray-700 mb-4">Create Assets</h3>
             <div className="grid grid-cols-4 gap-4">

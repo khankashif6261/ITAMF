@@ -13,6 +13,9 @@ import {
 
 export default function Sidebar({ active = "Dashboard" }) {
   const { user } = useUser();
+  const currentUser = Array.isArray(user) ? user[0] : user;
+  const isAdmin = currentUser?.role?.trim().toLowerCase() === "admin";
+
  const menu = [
   { label: "Dashboard", icon: LayoutDashboard, href: "/" },
   { label: "Retail Assets", icon: Laptop, href: "/assets" },
@@ -36,7 +39,7 @@ export default function Sidebar({ active = "Dashboard" }) {
 
         <nav className="space-y-2">
           {menu
-  .filter((item) => !item.adminOnly || user?.[0]?.role === "admin")
+  .filter((item) => !item.adminOnly || isAdmin)
   .map((item, i) => {
     const Icon = item.icon;
     const isActive = active === item.label;
