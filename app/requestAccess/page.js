@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function RequestAccess() {
   const [form, setForm] = useState({
@@ -34,26 +34,25 @@ export default function RequestAccess() {
 
       const data = await res.json();
 
-// ✅ SAVE USER ID
-localStorage.setItem("userId", data.user._id);
-
       if (!res.ok) throw new Error(data.message);
+
+      // ✅ SAVE USER ID
+      localStorage.setItem("userId", data.user._id);
 
       setMessage("✅ Request sent! Wait for admin approval.");
       setForm({ name: "", email: "", password: "" });
-      window.location.href="/pending"
+      window.location.href = "/pending";
     } catch (err) {
       setMessage("❌ " + err.message);
     }
 
     setLoading(false);
   };
-useEffect(()=> {
-})
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 via-white to-blue-100">
       <div className="bg-white p-8 rounded-2xl shadow-lg w-[350px]">
-        <h2 className="text-2xl font-bold mb-6 text-center">
+        <h2 className="text-2xl font-bold mb-6 text-center text-indigo-700">
           Request Access
         </h2>
 
@@ -64,7 +63,7 @@ useEffect(()=> {
             placeholder="Name"
             value={form.name}
             onChange={handleChange}
-            className="border p-2 rounded-lg"
+            className="border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition"
             required
           />
 
@@ -74,7 +73,7 @@ useEffect(()=> {
             placeholder="Email"
             value={form.email}
             onChange={handleChange}
-            className="border p-2 rounded-lg"
+            className="border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition"
             required
           />
 
@@ -84,21 +83,21 @@ useEffect(()=> {
             placeholder="Password"
             value={form.password}
             onChange={handleChange}
-            className="border p-2 rounded-lg"
+            className="border border-gray-300 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 transition"
             required
           />
 
           <button
             type="submit"
             disabled={loading}
-            className="bg-black text-white py-2 rounded-lg hover:bg-gray-800"
+            className="bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 disabled:opacity-60 disabled:cursor-not-allowed transition"
           >
             {loading ? "Sending..." : "Request Access"}
           </button>
         </form>
 
         {message && (
-          <p className="mt-4 text-center text-sm">{message}</p>
+          <p className="mt-4 text-center text-sm text-indigo-600">{message}</p>
         )}
       </div>
     </div>
